@@ -1,6 +1,7 @@
 // lib/features/auth/screens/login_screen.dart
 import 'package:flutter/material.dart';
-import '../facades/auth_facade.dart'; // Importamos la Fachada
+import '../facades/auth_facade.dart';
+import '../../feed/screens/feed_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,17 +22,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void _hacerLogin() async {
     setState(() => _estaCargando = true);
 
-    // ¡La magia del patrón Facade! Una sola línea limpia.
     final exito = await _authFacade.intentarLogin(
       _emailController.text,
       _passwordController.text,
     );
 
+    // ¡IMPORTANTE! Comprueba si el widget sigue "vivo" en pantalla antes de navegar
+    if (!mounted) return; 
+
     setState(() => _estaCargando = false);
 
     if (exito) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('¡Bienvenido a la app!'), backgroundColor: Colors.green),
+      // 🚀 SI HAY ÉXITO, SALTAMOS A LA PANTALLA DEL FEED Y BORRAMOS EL LOGIN DE LA HISTORIA
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const FeedScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
