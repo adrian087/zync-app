@@ -78,4 +78,40 @@ class FeedApi {
       return false;
     }
   }
+
+  // --- AÑADE ESTO ---
+  // Obtener comentarios
+  Future<List<dynamic>> obtenerComentarios(String token, int publicacionId) async {
+    final url = Uri.parse('$_baseUrl/publicaciones/$publicacionId/comentarios');
+    try {
+      final response = await http.get(url, headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception('Error al cargar comentarios');
+      }
+    } catch (e) {
+      print('Error de conexión: $e');
+      return [];
+    }
+  }
+
+  // Escribir un comentario
+  Future<bool> crearComentario(String token, int publicacionId, String contenido) async {
+    final url = Uri.parse('$_baseUrl/publicaciones/$publicacionId/comentarios');
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({'contenido': contenido}),
+      );
+      return response.statusCode == 201;
+    } catch (e) {
+      print('Error al comentar: $e');
+      return false;
+    }
+  }
 }

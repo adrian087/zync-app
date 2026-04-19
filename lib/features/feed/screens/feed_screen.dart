@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import '../facades/feed_facade.dart';
-import '../../auth/screens/login_screen.dart';
 import 'create_post_screen.dart';
+import 'comments_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -36,13 +36,6 @@ class _FeedScreenState extends State<FeedScreen> {
     }
   }
 
-  void _cerrarSesion() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const LoginScreen()),
-      (route) => false,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +47,7 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(icon: const Icon(Icons.logout), onPressed: _cerrarSesion),
-        ],
+        // Eliminamos el bloque 'actions' de aquí porque el Logout ahora está en el Perfil
       ),
       body: _estaCargando
           ? const Center(child: CircularProgressIndicator())
@@ -160,6 +151,37 @@ class _FeedScreenState extends State<FeedScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+
+                              // 👇 NUEVO: Espacio y Botón de Comentarios 👇
+                              const SizedBox(width: 16),
+                              IconButton(
+                                icon: const Icon(Icons.chat_bubble_outline),
+                                color: Colors.grey[600],
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .push(
+                                        MaterialPageRoute(
+                                          builder: (context) => CommentsScreen(
+                                            publicacion: publicacion,
+                                          ),
+                                        ),
+                                      )
+                                      .then((_) {
+                                        // 👇 Al volver de los comentarios, recargamos el muro
+                                        _cargarDatos();
+                                      });
+                                },
+                              ),
+                              // 👇 NUEVO: El texto con el número de comentarios 👇
+                              Text(
+                                // Usamos ?? 0 por si acaso el servidor aún no envía el dato
+                                '${publicacion['total_comentarios'] ?? 0}',
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              // 👆 HASTA AQUÍ 👆
                             ],
                           ),
                         ],

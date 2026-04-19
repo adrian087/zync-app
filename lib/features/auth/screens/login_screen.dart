@@ -1,7 +1,6 @@
-// lib/features/auth/screens/login_screen.dart
+import '../../../main_screen.dart';
 import 'package:flutter/material.dart';
 import '../facades/auth_facade.dart';
-import '../../feed/screens/feed_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,10 +12,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   // Instanciamos la Fachada
   final AuthFacade _authFacade = AuthFacade();
-  
+
   bool _estaCargando = false;
 
   void _hacerLogin() async {
@@ -28,18 +27,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // ¡IMPORTANTE! Comprueba si el widget sigue "vivo" en pantalla antes de navegar
-    if (!mounted) return; 
+    if (!mounted) return;
 
     setState(() => _estaCargando = false);
 
     if (exito) {
       // 🚀 SI HAY ÉXITO, SALTAMOS A LA PANTALLA DEL FEED Y BORRAMOS EL LOGIN DE LA HISTORIA
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const FeedScreen()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error al iniciar sesión'), backgroundColor: Colors.red),
+        const SnackBar(
+          content: Text('Error al iniciar sesión'),
+          backgroundColor: Colors.red,
+        ),
       );
     }
   }
@@ -85,9 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     foregroundColor: Colors.white,
                   ),
                   // Si está cargando, mostramos una ruedita, si no, el texto
-                  child: _estaCargando 
+                  child: _estaCargando
                       ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Iniciar Sesión', style: TextStyle(fontSize: 16)),
+                      : const Text(
+                          'Iniciar Sesión',
+                          style: TextStyle(fontSize: 16),
+                        ),
                 ),
               ),
             ],

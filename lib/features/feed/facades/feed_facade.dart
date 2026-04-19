@@ -59,4 +59,17 @@ class FeedFacade {
       return false; 
     }
   }
+
+  // --- AÑADE ESTO ---
+  Future<List<dynamic>> cargarComentarios(int publicacionId) async {
+    final token = await _storage.read(key: 'jwt_token');
+    if (token == null) return [];
+    return await _api.obtenerComentarios(token, publicacionId);
+  }
+
+  Future<bool> publicarComentario(int publicacionId, String contenido) async {
+    final token = await _storage.read(key: 'jwt_token');
+    if (token == null) return false;
+    return await _api.crearComentario(token, publicacionId, contenido);
+  }
 }
