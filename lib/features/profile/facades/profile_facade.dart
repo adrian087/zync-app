@@ -29,7 +29,6 @@ class ProfileFacade {
     }
   }
 
-  // --- AÑADE ESTE MÉTODO ---
   Future<bool> borrarPublicacion(int publicacionId) async {
     try {
       final token = await _storage.read(key: 'jwt_token');
@@ -37,13 +36,11 @@ class ProfileFacade {
 
       final url = Uri.parse('$_baseUrl/publicaciones/$publicacionId');
       
-      // Fíjate que usamos http.delete en lugar de get o post
       final response = await http.delete(
         url,
         headers: {'Authorization': 'Bearer $token'},
       );
 
-      // Si el servidor responde 200 OK, el borrado fue un éxito
       return response.statusCode == 200;
     } catch (e) {
       print('Error al borrar publicación: $e');

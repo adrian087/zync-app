@@ -13,7 +13,6 @@ class _MainScreenState extends State<MainScreen> {
   // Empezamos en la pestaña 0 (El Muro)
   int _indiceActual = 0;
 
-  // Lista de las pantallas que vamos a mostrar
   final List<Widget> _pantallas = [
     const FeedScreen(),
     const ProfileScreen(),
@@ -22,17 +21,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // El body cambia dinámicamente según el índice
       body: _pantallas[_indiceActual],
       
-      // La barra inferior mágica
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _indiceActual,
-        selectedItemColor: Colors.blue, // Usaremos el Azul Zync aquí en el futuro
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           setState(() {
-            _indiceActual = index; // Al pulsar, cambiamos de pantalla
+            _indiceActual = index;
           });
         },
         items: const [

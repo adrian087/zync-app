@@ -101,7 +101,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const Divider(height: 1, thickness: 1),
 
-                // --- LISTA DE TUS PUBLICACIONES ---
                 Expanded(
                   child: _datosPerfil!['publicaciones'].isEmpty
                       ? const Center(child: Text('Aún no has publicado nada.'))
@@ -126,9 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
 
-                              // 👇 AÑADE ESTE BLOQUE DE CONFIRMACIÓN AQUÍ 👇
                               confirmDismiss: (direction) async {
-                                // Mostramos un cuadro de diálogo nativo
                                 return await showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -142,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         TextButton(
                                           onPressed: () => Navigator.of(
                                             context,
-                                          ).pop(false), // Devuelve 'false'
+                                          ).pop(false),
                                           child: const Text(
                                             'Cancelar',
                                             style: TextStyle(
@@ -150,11 +147,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                           ),
                                         ),
-                                        // Botón de Eliminar
                                         TextButton(
                                           onPressed: () => Navigator.of(
                                             context,
-                                          ).pop(true), // Devuelve 'true'
+                                          ).pop(true),
                                           child: const Text(
                                             'Eliminar',
                                             style: TextStyle(
@@ -169,9 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
 
-                              // 👆 HASTA AQUÍ LA CONFIRMACIÓN 👆
                               onDismissed: (direction) async {
-                                // Esta parte se mantiene igual, solo se ejecutará si confirmDismiss devuelve 'true'
                                 final exito = await _facade.borrarPublicacion(
                                   post['id'],
                                 );
@@ -187,7 +181,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 }
                               },
 
-                              // Y aquí dentro metemos la tarjeta que ya tenías
                               child: Card(
                                 margin: const EdgeInsets.symmetric(vertical: 4),
                                 elevation: 0,
@@ -203,7 +196,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                             );
-                            // 👆 HASTA AQUÍ EL DISMISSIBLE 👆
                           },
                         ),
                 ),

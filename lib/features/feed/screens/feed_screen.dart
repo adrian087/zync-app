@@ -27,7 +27,6 @@ class _FeedScreenState extends State<FeedScreen> {
     setState(() => _estaCargando = true);
     final publicaciones = await _facade.cargarFeed();
 
-    // Si el widget sigue vivo, actualizamos la pantalla
     if (mounted) {
       setState(() {
         _publicaciones = publicaciones;
@@ -47,7 +46,6 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
-        // Eliminamos el bloque 'actions' de aquí porque el Logout ahora está en el Perfil
       ),
       body: _estaCargando
           ? const Center(child: CircularProgressIndicator())
@@ -75,7 +73,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       );
                     } catch (e) {
                       tiempoAmigable =
-                          ''; // Si hay error al leer la fecha, lo dejamos en blanco
+                          '';
                     }
                   }
 
@@ -91,7 +89,6 @@ class _FeedScreenState extends State<FeedScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Fila superior: Usuario y Fecha
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -120,30 +117,24 @@ class _FeedScreenState extends State<FeedScreen> {
                           const SizedBox(height: 12),
                           Row(
                             children: [
-                              // El botón del corazón
                               IconButton(
-                                // Si 'le_has_dado_like' es mayor que 0, corazón relleno. Si no, borde.
                                 icon: Icon(
                                   publicacion['le_has_dado_like'] > 0
                                       ? Icons.favorite
                                       : Icons.favorite_border,
                                 ),
-                                // Si le has dado like, rojo. Si no, gris.
                                 color: publicacion['le_has_dado_like'] > 0
                                     ? Colors.red
                                     : Colors.grey[600],
                                 onPressed: () async {
-                                  // 1. Llamamos a la fachada pasándole el ID del post
                                   final exito = await _facade.alternarLike(
                                     publicacion['id'],
                                   );
-                                  // 2. Si todo fue bien en el servidor, recargamos la lista
                                   if (exito) {
                                     _cargarDatos();
                                   }
                                 },
                               ),
-                              // El texto con el número total de likes
                               Text(
                                 '${publicacion['total_likes']}',
                                 style: TextStyle(
@@ -152,7 +143,6 @@ class _FeedScreenState extends State<FeedScreen> {
                                 ),
                               ),
 
-                              // 👇 NUEVO: Espacio y Botón de Comentarios 👇
                               const SizedBox(width: 16),
                               IconButton(
                                 icon: const Icon(Icons.chat_bubble_outline),
@@ -167,12 +157,10 @@ class _FeedScreenState extends State<FeedScreen> {
                                         ),
                                       )
                                       .then((_) {
-                                        // 👇 Al volver de los comentarios, recargamos el muro
                                         _cargarDatos();
                                       });
                                 },
                               ),
-                              // 👇 NUEVO: El texto con el número de comentarios 👇
                               Text(
                                 // Usamos ?? 0 por si acaso el servidor aún no envía el dato
                                 '${publicacion['total_comentarios'] ?? 0}',
@@ -181,7 +169,6 @@ class _FeedScreenState extends State<FeedScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              // 👆 HASTA AQUÍ 👆
                             ],
                           ),
                         ],

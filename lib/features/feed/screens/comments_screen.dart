@@ -3,7 +3,6 @@ import 'package:timeago/timeago.dart' as timeago;
 import '../facades/feed_facade.dart';
 
 class CommentsScreen extends StatefulWidget {
-  // Le pasamos la publicación entera para poder mostrarla arriba
   final Map<String, dynamic> publicacion;
 
   const CommentsScreen({super.key, required this.publicacion});
@@ -45,8 +44,8 @@ class _CommentsScreenState extends State<CommentsScreen> {
     final exito = await _facade.publicarComentario(widget.publicacion['id'], texto);
     
     if (exito) {
-      _comentarioController.clear(); // Limpiamos la caja de texto
-      await _cargarDatos(); // Recargamos la lista para ver el nuevo comentario
+      _comentarioController.clear();
+      await _cargarDatos();
     }
     
     if (mounted) setState(() => _enviando = false);
@@ -63,7 +62,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
       ),
       body: Column(
         children: [
-          // 1. EL TWEET ORIGINAL (Arriba del todo)
           Container(
             color: Colors.white,
             padding: const EdgeInsets.all(16),
@@ -82,7 +80,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
           ),
           const Divider(height: 1),
 
-          // 2. LA LISTA DE COMENTARIOS
           Expanded(
             child: _estaCargando
                 ? const Center(child: CircularProgressIndicator())
@@ -94,7 +91,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
                         itemBuilder: (context, index) {
                           final comentario = _comentarios[index];
                           
-                          // Formatear la fecha
                           String tiempo = '';
                           if (comentario['fecha_creacion'] != null) {
                             try {
@@ -123,7 +119,6 @@ class _CommentsScreenState extends State<CommentsScreen> {
                       ),
           ),
 
-          // 3. LA BARRA INFERIOR PARA ESCRIBIR
           Container(
             color: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

@@ -13,7 +13,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Instanciamos la Fachada
   final AuthFacade _authFacade = AuthFacade();
 
   bool _estaCargando = false;
@@ -26,13 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text,
     );
 
-    // ¡IMPORTANTE! Comprueba si el widget sigue "vivo" en pantalla antes de navegar
     if (!mounted) return;
 
     setState(() => _estaCargando = false);
 
     if (exito) {
-      // 🚀 SI HAY ÉXITO, SALTAMOS A LA PANTALLA DEL FEED Y BORRAMOS EL LOGIN DE LA HISTORIA
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const MainScreen()),
       );
@@ -86,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: Colors.blue,
                     foregroundColor: Colors.white,
                   ),
-                  // Si está cargando, mostramos una ruedita, si no, el texto
                   child: _estaCargando
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(

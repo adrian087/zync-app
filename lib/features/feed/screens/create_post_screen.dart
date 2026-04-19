@@ -26,7 +26,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     setState(() => _estaCargando = false);
 
     if (exito) {
-      // Si va bien, cerramos esta pantalla y le decimos al Muro que "true" (hubo éxito)
       Navigator.of(context).pop(true);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -41,7 +40,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       appBar: AppBar(
         title: const Text('Nuevo Zync'),
         actions: [
-          // El botón de publicar arriba a la derecha
           TextButton(
             onPressed: _estaCargando ? null : _publicar,
             child: _estaCargando 

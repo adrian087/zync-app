@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class FeedApi {
-  // Misma URL base que usamos en el login
   final String _baseUrl = 'http://localhost:3000/api';
 
-  // Fíjate que le pedimos el token por parámetro para poder entrar
   Future<List<dynamic>> obtenerPublicaciones(String token) async {
     final url = Uri.parse('$_baseUrl/publicaciones');
 
@@ -14,13 +12,11 @@ class FeedApi {
         url,
         headers: {
           'Content-Type': 'application/json',
-          // ¡Aquí le enseñamos el pasaporte VIP al servidor!
           'Authorization': 'Bearer $token',
         },
       );
 
       if (response.statusCode == 200) {
-        // Si el servidor responde OK, devolvemos la lista de tweets convertida desde JSON
         return jsonDecode(response.body);
       } else {
         throw Exception('Error del servidor al cargar el feed');
@@ -40,11 +36,9 @@ class FeedApi {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        // Enviamos el texto en formato JSON
         body: jsonEncode({'contenido': contenido}),
       );
 
-      // Si el servidor responde con 201 (Creado) o 200 (OK), ha sido un éxito
       if (response.statusCode == 201 || response.statusCode == 200) {
         return true;
       } else {
@@ -67,7 +61,6 @@ class FeedApi {
         },
       );
 
-      // Si el servidor responde 200 OK (ya sea poniendo o quitando el like), devolvemos true
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -79,8 +72,6 @@ class FeedApi {
     }
   }
 
-  // --- AÑADE ESTO ---
-  // Obtener comentarios
   Future<List<dynamic>> obtenerComentarios(String token, int publicacionId) async {
     final url = Uri.parse('$_baseUrl/publicaciones/$publicacionId/comentarios');
     try {
@@ -96,7 +87,6 @@ class FeedApi {
     }
   }
 
-  // Escribir un comentario
   Future<bool> crearComentario(String token, int publicacionId, String contenido) async {
     final url = Uri.parse('$_baseUrl/publicaciones/$publicacionId/comentarios');
     try {
