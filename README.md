@@ -1,96 +1,292 @@
 # ⚡ Zync - Red Social Multiplataforma en Tiempo Real
 
-![Flutter](https://img.shields.io/badge/Frontend-Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![NodeJS](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Socket.io](https://img.shields.io/badge/RealTime-Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge\&logo=flutter\&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge\&logo=dart\&logoColor=white)
+![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge\&logo=apple\&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge\&logo=android\&logoColor=white)
 
-**Zync** es una red social moderna, diseñada bajo el paradigma *Mobile-First* y desarrollada con un único código base para iOS y Android. El proyecto destaca por ofrecer una experiencia fluida a 60 FPS y comunicación bidireccional instantánea gracias a la implementación de WebSockets.
+**Zync** es una red social multiplataforma desarrollada bajo el paradigma **Mobile First**, construida con **Flutter** para ofrecer una experiencia nativa en iOS y Android a partir de una única base de código.
 
-Este proyecto ha sido desarrollado como **Trabajo de Fin de Grado (TFG)** en Desarrollo de Aplicaciones Multiplataforma.
+El proyecto ha sido desarrollado como parte del **Trabajo de Fin de Grado (TFG)** del ciclo de **Desarrollo de Aplicaciones Multiplataforma (DAM)** y destaca por su rendimiento optimizado, arquitectura modular y comunicación en tiempo real mediante WebSockets.
+
+> **Nota:** Este repositorio contiene exclusivamente el cliente móvil desarrollado en Flutter. El servidor, la API REST y la infraestructura de tiempo real se encuentran en el repositorio independiente de **Zync Backend**.
 
 ---
 
 ## ✨ Características Principales
 
-### Funcionalidades Core
-* 👤 **Autenticación Segura:** Registro local tradicional y Login con Google (OAuth).
-* 📝 **Publicaciones (Zyncs):** Textos de hasta 280 caracteres con soporte para carrusel multimedia (hasta 4 imágenes).
-* ⏱️ **Zync Drops:** Historias efímeras que caducan según el número de visualizaciones.
-* 💬 **Chat en Tiempo Real:** Mensajería directa privada (1 a 1) sin necesidad de recargar la pantalla.
-* 🔄 **Interacciones Sociales:** Sistema de "Me gusta", comentarios anidados, "ReZyncs" y seguimiento de usuarios (Follow/Unfollow).
-* 🛡️ **Privacidad:** Sistema avanzado de bloqueo de usuarios.
+### 👤 Sistema de Autenticación
 
-### Características Técnicas
-* 🚀 **Scroll Infinito:** Paginación dinámica desde el backend para optimizar el consumo de memoria.
-* 🔐 **Autenticación Stateless:** Protección de rutas mediante JSON Web Tokens (JWT).
-* 🎨 **Gestión de Estado Nativa:** Renderizado reactivo optimizado mediante `ValueNotifier` en Flutter.
-* 🛡️ **Integridad Referencial:** Reglas estrictas en base de datos (`ON DELETE CASCADE`) para evitar registros huérfanos.
+* Registro tradicional mediante correo electrónico.
+* Inicio de sesión seguro.
+* Integración con proveedores OAuth (Google Sign-In).
+* Persistencia automática de sesión mediante JWT.
+
+### 📝 Publicaciones (Zyncs)
+
+* Publicaciones de texto de hasta 280 caracteres.
+* Carrusel multimedia de hasta 4 imágenes.
+* Eliminación y gestión de contenido propio.
+* Actualización dinámica de interacciones.
+
+### ⏱️ Zync Drops
+
+Sistema de historias efímeras con:
+
+* Visualización temporal.
+* Gestión automática de expiración.
+* Seguimiento de visualizaciones.
+
+### 💬 Mensajería en Tiempo Real
+
+Comunicación instantánea mediante WebSockets:
+
+* Chats privados 1 a 1.
+* Entrega inmediata de mensajes.
+* Actualización sin necesidad de recargar vistas.
+
+### 🔄 Interacciones Sociales
+
+* Sistema de "Me gusta".
+* Comentarios anidados.
+* ReZyncs (compartir publicaciones).
+* Seguimiento de usuarios (Follow / Unfollow).
+
+### 🛡️ Privacidad y Seguridad
+
+* Bloqueo de usuarios.
+* Ocultación de contenido restringido.
+* Protección de sesiones mediante JWT.
 
 ---
 
-## 🛠️ Stack Tecnológico y Arquitectura
+## 🚀 Rendimiento y Experiencia de Usuario
 
-El ecosistema se basa en una arquitectura **MVC Distribuida** para garantizar el máximo desacoplamiento y escalabilidad:
+### Scroll Infinito
 
-### 📱 Frontend (Cliente)
-* **Framework:** Flutter (Dart).
-* **Gestión de Estado:** `ValueNotifier` y `ValueListenableBuilder` (sin librerías pesadas de terceros).
-* **Red:** Paquete `http` nativo y `MultipartRequest` para subida de binarios.
-* **Multimedia:** `image_picker` e `image_cropper` para manipulación local.
+Implementado mediante:
 
-### ⚙️ Backend (API REST & Sockets)
-* **Entorno:** Node.js con Express.
-* **Tiempo Real:** Socket.io para túneles TCP persistentes.
-* **Seguridad:** JWT (JsonWebToken) y encriptación Bcrypt.
-* **Multimedia:** Multer para el procesamiento asíncrono de imágenes.
+```dart
+ListView.builder()
+```
 
-### 🗄️ Base de Datos
-* **Motor:** MySQL (Relacional).
-* **Diseño:** Prevención activa contra Inyecciones SQL (Consultas parametrizadas) y lógica condicional avanzada en el motor DB.
+Ventajas:
 
-### ☁️ Infraestructura y Despliegue (DevOps)
-* **Servidor:** VPS Linux.
-* **Gestor de procesos:** PM2.
-* **Proxy Inverso:** Nginx.
-* **Seguridad Perimetral:** Cloudflare (DNS, mitigación DDoS y cifrado SSL/HTTPS estricto).
+* Menor consumo de memoria.
+* Carga progresiva de contenido.
+* Mejor rendimiento en dispositivos de gama media y baja.
 
-## ⚙️ Instalación y Despliegue Local
+### 🌙 Modo Oscuro y Claro
 
-Si deseas correr este proyecto en tu entorno local, sigue estos pasos:
+* Adaptación automática al sistema operativo.
+* Persistencia de preferencias.
+* Experiencia visual consistente.
+
+### 🖼️ Procesamiento Local de Imágenes
+
+Antes de enviar imágenes al servidor:
+
+* Selección desde galería o cámara.
+* Recorte nativo.
+* Optimización previa para reducir ancho de banda.
+
+---
+
+## 🏗️ Arquitectura del Proyecto
+
+La aplicación sigue una arquitectura basada en **Separación de Responsabilidades (Separation of Concerns)** para facilitar la escalabilidad y el mantenimiento.
+
+### 📁 `/lib/screens`
+
+Contiene las vistas principales y flujos de navegación:
+
+* Login
+* Registro
+* Feed principal
+* Perfil
+* Búsqueda
+* Chat
+
+Aquí reside únicamente la lógica visual y de interacción.
+
+### 📁 `/lib/widgets`
+
+Componentes reutilizables de interfaz:
+
+* Tarjetas de publicaciones
+* Avatares
+* Botones personalizados
+* Modales
+* Componentes compartidos
+
+Aplicando el principio **DRY (Don't Repeat Yourself)**.
+
+### 📁 `/lib/services`
+
+Capa de comunicación externa:
+
+* Consumo de API REST.
+* Gestión de peticiones HTTP.
+* Interceptación de errores.
+* Gestión de conexiones Socket.io.
+
+### 📁 `/lib/models`
+
+Modelos de datos tipados en Dart encargados de:
+
+* Recibir respuestas JSON.
+* Validar estructuras.
+* Transformar datos en objetos utilizables por la aplicación.
+
+---
+
+## ⚡ Gestión de Estado y Asincronía
+
+Uno de los objetivos principales de Zync ha sido minimizar el consumo de recursos.
+
+### Estado Reactivo Nativo
+
+En lugar de utilizar soluciones complejas como:
+
+* BLoC
+* Redux
+* MobX
+
+Se aprovechan herramientas nativas de Flutter:
+
+```dart
+ValueNotifier
+ValueListenableBuilder
+```
+
+Esto permite que únicamente se reconstruyan los widgets afectados por cambios de estado.
+
+Ejemplo:
+
+Si un usuario pulsa "Me gusta" en una publicación, solo se actualiza el icono correspondiente y no toda la pantalla.
+
+### Autenticación Stateless
+
+La sesión del usuario se gestiona mediante:
+
+* JSON Web Tokens (JWT).
+* Persistencia segura en almacenamiento local.
+* Inclusión automática del token en las cabeceras HTTP.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Categoría             | Tecnología             |
+| --------------------- | ---------------------- |
+| Framework             | Flutter                |
+| Lenguaje              | Dart                   |
+| HTTP Client           | http                   |
+| Tiempo Real           | socket_io_client       |
+| Gestión Multimedia    | image_picker           |
+| Edición de Imágenes   | image_cropper          |
+| Persistencia Local    | shared_preferences     |
+| Almacenamiento Seguro | flutter_secure_storage |
+
+---
+
+## 📂 Estructura del Proyecto
+
+```text
+lib/
+│
+├── models/
+├── screens/
+├── services/
+├── widgets/
+├── utils/
+│
+├── main.dart
+│
+assets/
+│
+pubspec.yaml
+README.md
+```
+
+---
+
+## ⚙️ Instalación y Configuración Local
 
 ### Prerrequisitos
-* [Flutter SDK](https://flutter.dev/docs/get-started/install) (versión 3.x o superior).
-* [Node.js](https://nodejs.org/) (versión 16 o superior).
-* Servidor MySQL corriendo localmente.
 
-### 1. Configurar el Backend (Node.js)
+* Flutter SDK 3.x o superior.
+* Android Studio o VS Code.
+* Android Emulator o iOS Simulator.
+* Backend de Zync operativo.
+
+---
+
+### 1. Clonar el repositorio
+
 ```bash
-# Navegar a la carpeta del servidor
-cd backend
-
-# Instalar las dependencias
-npm install
-
-# Crear un archivo .env basado en el .env.example y configurar las variables:
-# PORT=3000
-# DB_HOST=localhost
-# DB_USER=root
-# DB_PASS=tu_contraseña
-# DB_NAME=zync_db
-# JWT_SECRET=tu_secreto_super_seguro
-
-# Iniciar el servidor en modo desarrollo
-npm run dev
-
-# Navegar a la carpeta de la app
+git clone https://github.com/tu_usuario/zync_app.git
 cd zync_app
+```
 
-# Obtener los paquetes de Dart
+### 2. Instalar dependencias
+
+```bash
 flutter pub get
+```
 
-# (Opcional) Generar archivos si usas build_runner
-# flutter pub run build_runner build --delete-conflicting-outputs
+### 3. Configurar la URL de la API
 
-# Iniciar la aplicación en un emulador o dispositivo físico
+Edita tu archivo de configuración global:
+
+```dart
+// Emulador Android
+static const String apiUrl = "http://10.0.2.2:3000/api";
+
+// Producción
+// static const String apiUrl = "https://api.tudominio.com/api";
+```
+
+### 4. Ejecutar la aplicación
+
+```bash
 flutter run
+```
+
+También puedes compilar para producción:
+
+#### Android
+
+```bash
+flutter build apk --release
+```
+
+#### iOS
+
+```bash
+flutter build ios --release
+```
+
+---
+
+## 🎯 Objetivos Técnicos Alcanzados
+
+* Arquitectura modular y escalable.
+* Comunicación en tiempo real mediante WebSockets.
+* Persistencia segura de sesiones.
+* Optimización de reconstrucciones de UI.
+* Consumo eficiente de memoria.
+* Compatibilidad multiplataforma con una única base de código.
+* Integración completa con backend REST y Socket.io.
+
+---
+
+## 👨‍💻 Autor
+
+**Adrián Torres Cañete**
+
+🎓 Trabajo de Fin de Grado — Desarrollo de Aplicaciones Multiplataforma (DAM)
+
+📱 **Zync — Red Social Multiplataforma en Tiempo Real**
+
+> *"Rompiendo la brecha del desarrollo nativo a través del rendimiento y el tiempo real."*
