@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "599522831280",
+    "project_id": "zync-5c338",
+    "storage_bucket": "zync-5c338.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:599522831280:android:e1633eebea0e30bd768475",
+        "android_client_info": {
+          "package_name": "com.example.mi_red_social_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbqgTZWEOkmbG0LHGf8rIrs_aUn_vBjwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
